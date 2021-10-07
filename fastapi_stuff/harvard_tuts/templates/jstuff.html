@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js tutorial</title>
+    <link rel="shortcut icon" href="{{ url_for('static', path='favicon.ico') }}">
+    
+</head>
+<body>
+    <h1 id="hello">Hellooooo</h1>
+    <div>
+        <button onclick="hello()">Try Me</button>
+    </div>
+    
+    <br/>
+
+    <div>
+        <button onclick="count()">Count</button>
+        <span>0</span>
+    </div>
+    <br />
+    <form>
+        <input autofocus id="name" placeholder="Name" type="text">
+        <input type="submit">
+    </form>
+
+    <br/>
+    <h1 id="yoyo">YOYOYO</h1>
+    <button id="red" class="colbtn" data-color="red">Red</button>
+    <button id="blue" class="colbtn" data-color="blue">Blue</button>
+    <button id="green" class="colbtn" data-color="green">Green</button>
+    
+    <br/>
+    <h1 id="yoyomama">YOYOMAMA</h1>
+    <select>
+        <option value="black">Black</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+    </select>
+
+    <script src="{{ url_for('static', path='stuff.js') }}"></script>
+</body>
+</html>

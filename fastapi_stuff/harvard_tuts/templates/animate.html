@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animate</title>
+    <link rel="shortcut icon" href="{{ url_for('static', path='favicon.ico') }}">
+    <style>
+        @keyframes kuku {
+            /* from {
+                font-size: 20px;
+                left: 0%;
+            }
+            to {
+                font-size: 100px;
+                left: 50%;
+            } */
+            0% {
+                font-size: 20px;
+                left: 0%;
+            }
+            50% {
+                font-size: 80px;
+                left: 50%;
+            }
+            100% {
+                font-size: 160px;
+                left: 0%;
+            }
+        }
+        h1 {
+            animation-name: kuku;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+            position: relative;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+<body>
+    
+    <button>Click Me!</button>
+    <h1>Welcome</h1>
+    <script>
+        // js to address the h1
+        const h1 =document.querySelector('h1');
+        h1.style.animationPlayState = 'paused';
+
+        // js to address button
+        document.querySelector('button').onclick = () => {
+            if (h1.style.animationPlayState === 'paused') {
+                h1.style.animationPlayState = 'running';
+            } else {
+                h1.style.animationPlayState = 'paused';
+            }
+        }
+    </script>
+</body>
+</html>

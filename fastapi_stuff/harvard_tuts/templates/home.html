@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvard tutorial</title>
+
+    <!--Bootstrap stuff-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <!-- My own css styles-->
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', path='favicon.ico') }}">
+
+</head>
+<body>
+    <div id="liveAlertPlaceholder">
+        <button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button>
+
+        <div class="alert alert-primary alert-dismissible" role="alert" id="liveAlert">
+            <strong>Nice!</strong> You've triggered this alert.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
+<script>
+    var alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+    var alertTrigger = document.getElementById('liveAlertBtn')
+
+    function alert(message, type) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+        alertPlaceholder.append(wrapper)
+    }
+
+    if (alertTrigger) {
+        alertTrigger.addEventListener('click', function () {
+            alert('Nice, you triggered this alert message!', 'success')
+        })
+    }
+</script>
+
+
+    <h1 style="color: blue;">YOYOMAMA!!!</h1>
+    <h1 id="foo">FOOFOOFOO</h1>
+    <h1>WAKAWAKA</h1>
+    <div class="baz">
+        <ul>
+            <li><a href="https://tradingview.com">tradingview</a></li>
+            <li><a href="https://binance.com">Binance</a></li>
+            <li><a href="https://finviz.com">Finviz</a></li>
+        </ul>
+    </div>
+    
+    <button>Dont click me</button>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Website</th>
+                    <th>Instrument</th>
+                    <th>Registered</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>TradingView</td>
+                    <td>All</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Finviz</td>
+                    <td>Stocks</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="container">
+        <span>1.A span inside of a div to demo Flexbox</span>
+        <span>2. A span inside of a div to demo Flexbox</span>
+        <span>3. A span inside of a div to demo Flexbox</span>
+        <span>4. A span inside of a div to demo Flexbox</span>
+        <span>5. A span inside of a div to demo Flexbox</span>
+        <span>6. A span inside of a div to demo Flexbox</span>
+    </div>
+
+    <div id="grid">
+        <div class="grid-item">1</div>
+        <div class="grid-item">2</div>
+        <div class="grid-item">3</div>
+        <div class="grid-item">4</div>
+        <div class="grid-item">5</div>
+        <div class="grid-item">6</div>
+        <div class="grid-item">7</div>
+        <div class="grid-item">8</div>
+        <div class="grid-item">9</div>
+        <div class="grid-item">10</div>
+    </div>
+
+</body>
+</html>

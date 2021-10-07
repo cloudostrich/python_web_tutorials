@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="shortcut icon" href="{{ url_for('static', path='favicon.ico') }}">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // submit button disabled by default
+            document.querySelector('#submit').disabled = true;
+            document.querySelector('#task').onkeyup = () =>{
+                if (document.querySelector('#task').value.length > 0) {
+                    document.querySelector('#submit').disabled = false;    
+                } else {
+                    document.querySelector('#submit').disabled=true;
+                }
+                
+            }
+            document.querySelector('form').onsubmit = () => {
+                const task = document.querySelector('#task').value;
+                console.log(task);
+
+                const li = document.createElement('li');
+                li.innerHTML = task;
+
+                document.querySelector('#tasks').append(li);
+                document.querySelector('#task').value = '';
+                document.querySelector('#submit').disabled = true;
+
+                // Stop form from submitting
+                return false;
+            }
+
+            // let counter = 0;
+            
+            if (!localStorage.getItem('counter')) {
+                localStorage.setItem('counter',0);
+            }
+
+            document.querySelector('#cnt').innerHTML = localStorage.getItem('counter');
+            
+            function count() {
+                let counter = localStorage.getItem('counter');
+                counter ++;
+                document.querySelector('#cnt').innerHTML = counter;
+                localStorage.setItem('counter', counter);
+            }
+
+            // counter
+            document.querySelector("#cntbtn").onclick = count;
+            // setInterval(count,1000);
+        })
+    </script>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <div>
+        <button id="cntbtn">Count</button>
+        <h2 id="cnt">0</h2>
+    </div>
+    <br/>
+    <ul id="tasks"></ul>
+    <form>
+        <input id="task" placeholder="New Task" type="text">
+        <input id="submit" type="submit">
+    </form>
+</body>
+</html>
