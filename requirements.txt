@@ -1,3 +1,4 @@
 python-lsp-server[all]
 fastapi
 uvicorn[standard]
+passlib[bcrypt]
