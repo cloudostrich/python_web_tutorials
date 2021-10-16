@@ -5,6 +5,7 @@ import hashing
 import dbase
 from sqlalchemy.orm import Session
 from typing import List
+from routers import blog
 
 
 app = FastAPI()
@@ -16,17 +17,19 @@ app = FastAPI()
 
 dbase.Base.metadata.create_all(dbase.engine)
 
+# router stuff
+app.include_router(blog.router)
 
-def get_db():
-    db = dbase.localsession()
-    try:
-        yield db
-    finally:
-        db.close()
+# def get_db():
+#    db = dbase.localsession()
+#    try:
+#        yield db
+#    finally:
+#        db.close()
 
 
 @app.post('/blog', status_code=status.HTTP_201_CREATED, tags=['blogs'])
-def create(request: schemas.Blog, db: Session = Depends(get_db)):
+def create(request: schemas.Blog, db: Session = Depends(dbase.get_db)):
     # TODO: paramiz user_id
     new_blog = dbase.Blog(title=request.title, body=request.body, user_id=1)
     db.add(new_blog)
@@ -36,20 +39,20 @@ def create(request: schemas.Blog, db: Session = Depends(get_db)):
 
 
 # just to demo response_model in list
-@app.get('/blog', response_model=List[schemas.ShowBlog], tags=['blogs'])
-def allblogs2(db: Session = Depends(get_db)):
-    blogs = db.query(dbase.Blog).all()
-    return blogs
+# @app.get('/blog', response_model=List[schemas.ShowBlog], tags=['blogs'])
+# def allblogs2(db: Session = Depends(dbase.get_db)):
+#    blogs = db.query(dbase.Blog).all()
+#    return blogs
 
 
 # @app.get('/blog')
-# def getblogs(db: Session = Depends(get_db)):
+# def getblogs(db: Session = Depends(dbase.get_db)):
 #    blogs = db.query(dbase.Blog).all()
 #    return blogs
 
 
 @app.get('/blog/{id}', status_code=200, response_model=schemas.ShowBlog, tags=['blogs'])
-def show(id, response: Response, db: Session = Depends(get_db)):
+def show(id, response: Response, db: Session = Depends(dbase.get_db)):
     blog = db.query(dbase.Blog).filter(dbase.Blog.id == id).first()
     if not blog:
         #        response.status_code = status.HTTP_404_NOT_FOUND
@@ -60,7 +63,7 @@ def show(id, response: Response, db: Session = Depends(get_db)):
 
 
 @app.delete('/blog/{id}', status_code=status.HTTP_204_NO_CONTENT, tags=['blogs'])
-def destroy(id, db: Session = Depends(get_db)):
+def destroy(id, db: Session = Depends(dbase.get_db)):
     blog = db.query(dbase.Blog).filter(dbase.Blog.id == id)
     if not blog.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -71,7 +74,7 @@ def destroy(id, db: Session = Depends(get_db)):
 
 
 @app.put('/blog/{id}', status_code=status.HTTP_202_ACCEPTED, tags=['blogs'])
-def update(id, request: schemas.Blog, db: Session = Depends(get_db)):
+def update(id, request: schemas.Blog, db: Session = Depends(dbase.get_db)):
     blog = db.query(dbase.Blog).filter(dbase.Blog.id == id)
     if not blog.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -83,7 +86,7 @@ def update(id, request: schemas.Blog, db: Session = Depends(get_db)):
 
 
 @app.post('/user', response_model=schemas.ShowUser, tags=['users'])
-def create_user(request: schemas.User, db: Session = Depends(get_db)):
+def create_user(request: schemas.User, db: Session = Depends(dbase.get_db)):
     new_user = dbase.User(
         name=request.name, email=request.email, password=hashing.Hash.bcrypt(request.password))
     db.add(new_user)
@@ -93,7 +96,7 @@ def create_user(request: schemas.User, db: Session = Depends(get_db)):
 
 
 @app.get('/user', response_model=schemas.ShowUser, tags=['users'])
-def get_user(id: int, db: Session = Depends(get_db)):
+def get_user(id: int, db: Session = Depends(dbase.get_db)):
     user = db.query(dbase.User).filter(dbase.User.id == id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

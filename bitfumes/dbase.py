@@ -12,6 +12,19 @@ Base = declarative_base()
 
 localsession = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
+# utility function
+
+
+def get_db():
+    db = dbase.localsession()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+#
+
 # Create model for tables
 
 
